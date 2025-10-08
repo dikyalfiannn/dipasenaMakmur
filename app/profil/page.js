@@ -54,10 +54,11 @@ export default function ProfilPage() {
                 cikal bakal penduduk Kampung Bumi Dipasena Makmur.
               </p>
               
+              {/* PERBAIKAN: Mengganti " (petik ganda) menjadi ' (petik tunggal) di baris bawah */}
               <p className="text-gray-800 leading-relaxed mb-4">
                 Kampung Persiapan Bumi Dipasena Makmur secara resmi didirikan pada Februari 1993 oleh Bupati Lampung Utara. 
                 Setelah era reformasi dan terbentuknya Kabupaten Tulang Bawang, para tokoh masyarakat bekerja keras untuk 
-                meningkatkan status kampung dari "persiapan" menjadi "definitif". Hal ini tercapai melalui SK Bupati 
+                meningkatkan status kampung dari 'persiapan' menjadi 'definitif'. Hal ini tercapai melalui SK Bupati 
                 (nomor: B/283/BG.III/TB/2001) pada tahun 2001.
               </p>
               

@@ -380,7 +380,7 @@ export default function AdminPage() {
                 size="sm"
                 className="bg-blue-50 text-blue-700 hover:bg-blue-100"
               >
-               
+                
               </Button>
             </CardTitle>
           </CardHeader>
@@ -389,12 +389,13 @@ export default function AdminPage() {
               <div>
                 <h4 className="font-semibold mb-2 text-black">Cara Menambah Berita:</h4>
                 <ol className="text-sm text-gray-700 space-y-1">
-                  <li>1. Isi form "Tambah Berita Baru" di sebelah kiri</li>
+                  {/* PERBAIKAN: Mengganti " (petik ganda) menjadi ' (petik tunggal) */}
+                  <li>1. Isi form 'Tambah Berita Baru' di sebelah kiri</li>
                   <li>2. Judul harus menarik dan informatif</li>
                   <li>3. Ringkasan berisi poin-poin penting (1-2 kalimat)</li>
                   <li>4. URL gambar bisa dari internet atau kosong</li>
                   <li>5. Isi berita tulis dengan lengkap dan jelas</li>
-                  <li>6. Klik "Simpan Berita"</li>
+                  <li>6. Klik 'Simpan Berita'</li>
                 </ol>
               </div>
               <div>

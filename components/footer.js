@@ -1,5 +1,8 @@
+// 1. Tambahkan baris ini untuk mengimpor komponen Link
+import Link from 'next/link';
+
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -28,10 +31,11 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-4">Tautan Cepat</h3>
             <ul className="space-y-2">
-              <li><a href="/profil" className="text-gray-300 hover:text-green-400">Profil Kampung</a></li>
-              <li><a href="/struktur" className="text-gray-300 hover:text-green-400">Struktur Organisasi</a></li>
-              <li><a href="/berita" className="text-gray-300 hover:text-green-400">Berita</a></li>
-              <li><a href="/kontak" className="text-gray-300 hover:text-green-400">Kontak</a></li>
+              {/* 2. Ganti semua tag <a> dengan <Link> seperti di bawah ini */}
+              <li><Link href="/profil" className="text-gray-300 hover:text-green-400">Profil Kampung</Link></li>
+              <li><Link href="/struktur" className="text-gray-300 hover:text-green-400">Struktur Organisasi</Link></li>
+              <li><Link href="/berita" className="text-gray-300 hover:text-green-400">Berita</Link></li>
+              <li><Link href="/kontak" className="text-gray-300 hover:text-green-400">Kontak</Link></li>
             </ul>
           </div>
         </div>
@@ -43,5 +47,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
