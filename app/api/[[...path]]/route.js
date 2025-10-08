@@ -97,7 +97,8 @@ export async function POST(request) {
     // Create news
     if (pathname === '/api/news') {
       const authHeader = request.headers.get('authorization')
-      if (!authHeader?.startsWith('Bearer ')) {
+      // PERBAIKAN: Mengganti "?." dengan pengecekan eksplisit
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return NextResponse.json({ success: false, message: 'Token required' }, { status: 401 })
       }
 
@@ -149,7 +150,8 @@ export async function PUT(request) {
     // Update news
     if (pathname.startsWith('/api/news/')) {
       const authHeader = request.headers.get('authorization')
-      if (!authHeader?.startsWith('Bearer ')) {
+      // PERBAIKAN: Mengganti "?." dengan pengecekan eksplisit
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return NextResponse.json({ success: false, message: 'Token required' }, { status: 401 })
       }
 
@@ -200,7 +202,8 @@ export async function DELETE(request) {
     // Delete news
     if (pathname.startsWith('/api/news/')) {
       const authHeader = request.headers.get('authorization')
-      if (!authHeader?.startsWith('Bearer ')) {
+      // PERBAIKAN: Mengganti "?." dengan pengecekan eksplisit
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return NextResponse.json({ success: false, message: 'Token required' }, { status: 401 })
       }
 
