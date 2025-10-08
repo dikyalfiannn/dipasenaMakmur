@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid'
 import bcrypt from 'bcryptjs'
 import { SignJWT, jwtVerify } from 'jose'
 
+export const dynamic = 'force-dynamic';
+
 const client = new MongoClient(process.env.MONGO_URL)
 const secret = new TextEncoder().encode('your-secret-key-change-in-production')
 
