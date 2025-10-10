@@ -9,6 +9,23 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Calendar, Users, FileText, Phone } from 'lucide-react'
 
+export const metadata = {
+  title: 'Beranda | Website Resmi Kampung Bumi Dipasena Makmur',
+  description: 'Selamat datang di website resmi Kampung Bumi Dipasena Makmur. Temukan informasi terbaru, profil, struktur organisasi, dan layanan kampung.',
+  openGraph: {
+    title: 'Beranda | Website Resmi Kampung Bumi Dipasena Makmur',
+    description: 'Selamat datang di website resmi Kampung Bumi Dipasena Makmur.',
+    images: [
+      {
+        // Saya ambil URL gambar ini dari Hero Section di kode Anda
+        url: 'https://customer-assets.emergentagent.com/job_desadipasena/artifacts/shnka1zd_ChatGPT%20Image%20Sep%2019%2C%202025%2C%2003_05_16%20AM.png', 
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+};
+
 export default function HomePage() {
   const [latestNews, setLatestNews] = useState([])
   const [loading, setLoading] = useState(true)

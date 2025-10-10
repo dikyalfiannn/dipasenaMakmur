@@ -10,6 +10,64 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Calendar, ArrowLeft } from 'lucide-react'
 
+// (Taruh fungsi ini di bagian atas file, di bawah import, sebelum komponen utama Anda)
+
+export async function generateMetadata({ params }) {
+  try {
+    // 1. Ambil slug dari URL
+    const slug = params.slug;
+
+    // 2. Ambil data berita dari API Anda
+    // Ganti URL di bawah jika domain Anda berbeda
+    const response = await fetch(`https://dipasena-makmur.vercel.app/api/news/${slug}`);
+    
+    // Jika response tidak OK (misal: 404 Not Found), berikan metadata default
+    if (!response.ok) {
+      return {
+        title: 'Berita Tidak Ditemukan',
+      };
+    }
+
+    const result = await response.json();
+    const news = result.data;
+
+    // Jika berita tidak ditemukan di dalam data
+    if (!news) {
+      return {
+        title: 'Berita Tidak Ditemukan',
+      };
+    }
+
+    // 3. Buat dan kembalikan metadata yang sesuai dengan berita
+    return {
+      title: news.title,
+      description: news.excerpt, // Menggunakan ringkasan berita sebagai deskripsi
+      openGraph: {
+        title: news.title,
+        description: news.excerpt,
+        images: [
+          {
+            url: news.coverImage, // <-- INI YANG AKAN MENJADI GAMBAR PREVIEW
+            width: 1200,          // Ukuran standar untuk gambar OG
+            height: 630,          // Ukuran standar untuk gambar OG
+          },
+        ],
+      },
+    };
+  } catch (error) {
+    // Jika terjadi error saat fetch, berikan metadata default
+    console.error('Failed to generate metadata:', error);
+    return {
+      title: 'Kampung Bumi Dipasena Makmur',
+      description: 'Terjadi kesalahan saat memuat informasi berita.',
+    };
+  }
+}
+
+// ... sisa kode komponen halaman berita Anda ...
+// export default function Page({ params }) { ... }
+
+
 export default function NewsDetailPage() {
   const params = useParams()
   const [news, setNews] = useState(null)
