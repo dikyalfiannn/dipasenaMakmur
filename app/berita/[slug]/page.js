@@ -1,10 +1,8 @@
 import NewsDetailPageClient from '@/components/NewsDetailPageClient'
 
-// Ini adalah 'resep dapur' dinamis (Server) untuk preview link
 export async function generateMetadata({ params }) {
   try {
     const slug = params.slug;
-    // Pastikan URL ini adalah URL production Anda
     const response = await fetch(`https://dipasena-makmur.vercel.app/api/news/${slug}`);
     
     if (!response.ok) {
@@ -36,8 +34,6 @@ export async function generateMetadata({ params }) {
   }
 }
 
-// Ini adalah komponen Server yang memanggil komponen Client Anda
 export default function NewsDetailPage({ params }) {
-  // Kita meneruskan 'params' dari Server ke Client sebagai props
   return <NewsDetailPageClient params={params} />
 }

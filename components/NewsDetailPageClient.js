@@ -14,12 +14,7 @@ export default function NewsDetailPageClient({ params }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-
-  console.log("Mencoba memuat berita dengan slug:", params.slug);
-
-  // --- PERBAIKAN DI BAGIAN INI ---
   useEffect(() => {
-    // Fungsi fetchNews sekarang ada di dalam useEffect
     const fetchNews = async () => {
       try {
         const response = await fetch(`/api/news/${params.slug}`)
@@ -30,23 +25,25 @@ export default function NewsDetailPageClient({ params }) {
         } else {
           setError('Berita tidak ditemukan')
         }
-      } catch (error) {
-        console.error('Error fetching news:', error)
+      } catch (err) {
+        console.error('Error fetching news:', err)
         setError('Terjadi kesalahan saat memuat berita')
       } finally {
         setLoading(false)
       }
     }
 
-    // Pengecekan dan pemanggilan tetap sama
-    if (params.slug) {
+    if (params && params.slug) {
       fetchNews()
+    } else {
+      // Jika params.slug tidak ada, langsung berhenti loading dan tampilkan error
+      setLoading(false)
+      setError('Slug berita tidak ditemukan.')
     }
-  }, [params.slug]) // Dependency array sudah benar
-
-  // --- BATAS AKHIR PERBAIKAN ---
+  }, [params]) // Diubah menjadi [params] agar lebih aman
 
   const formatDate = (dateString) => {
+    if (!dateString) return '';
     return new Date(dateString).toLocaleDateString('id-ID', {
       year: 'numeric',
       month: 'long',
@@ -109,10 +106,8 @@ export default function NewsDetailPageClient({ params }) {
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
-      
       <div className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          
           <div className="mb-6">
             <Button asChild variant="outline">
               <Link href="/berita">
@@ -121,10 +116,8 @@ export default function NewsDetailPageClient({ params }) {
               </Link>
             </Button>
           </div>
-
           <Card className="rounded-2xl shadow-lg bg-white">
             <CardContent className="p-8">
-              
               <div className="mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{news?.title}</h1>
                 <div className="flex items-center text-gray-800 mb-6">
@@ -132,7 +125,6 @@ export default function NewsDetailPageClient({ params }) {
                   {formatDate(news?.createdAt)}
                 </div>
               </div>
-
               {news?.coverImage && (
                 <div className="relative h-64 md:h-96 mb-8 rounded-lg overflow-hidden">
                   <Image
@@ -143,23 +135,18 @@ export default function NewsDetailPageClient({ params }) {
                   />
                 </div>
               )}
-
               <div className="text-gray-900 leading-relaxed whitespace-pre-wrap text-lg">
                 {news?.content}
               </div>
-
             </CardContent>
           </Card>
-
           <div className="mt-8 text-center">
             <Button asChild>
               <Link href="/berita">Lihat Berita Lainnya</Link>
             </Button>
           </div>
-
         </div>
       </div>
-      
       <Footer />
     </div>
   )
