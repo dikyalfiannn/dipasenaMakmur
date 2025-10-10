@@ -14,6 +14,9 @@ export default function NewsDetailPageClient({ params }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+
+  console.log("Mencoba memuat berita dengan slug:", params.slug);
+
   // --- PERBAIKAN DI BAGIAN INI ---
   useEffect(() => {
     // Fungsi fetchNews sekarang ada di dalam useEffect
