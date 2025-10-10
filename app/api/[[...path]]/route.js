@@ -7,7 +7,7 @@ import { SignJWT, jwtVerify } from 'jose'
 export const dynamic = 'force-dynamic';
 
 const client = new MongoClient(process.env.MONGO_URL)
-const secret = new TextEncoder().encode('your-secret-key-change-in-production')
+const secret = new TextEncoder().encode(process.env.JWT_SECRET)
 
 async function connectDB() {
   if (!client.topology?.isConnected()) {
