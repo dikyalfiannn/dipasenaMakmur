@@ -1,6 +1,8 @@
 'use client'
 
+// 1. Tambahkan kembali import useParams
 import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import Navbar from '@/components/navbar'
@@ -9,7 +11,11 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Calendar, ArrowLeft } from 'lucide-react'
 
-export default function NewsDetailPageClient({ params }) {
+// 2. Hapus { params } dari sini
+export default function NewsDetailPageClient() {
+  // 3. Tambahkan kembali const params = useParams()
+  const params = useParams()
+  
   const [news, setNews] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -17,6 +23,7 @@ export default function NewsDetailPageClient({ params }) {
   useEffect(() => {
     const fetchNews = async () => {
       try {
+        // 'params.slug' sekarang akan berfungsi karena diambil dari useParams
         const response = await fetch(`/api/news/${params.slug}`)
         const data = await response.json()
         
@@ -35,13 +42,13 @@ export default function NewsDetailPageClient({ params }) {
 
     if (params && params.slug) {
       fetchNews()
-    } else {
-      // Jika params.slug tidak ada, langsung berhenti loading dan tampilkan error
+    } else if (params) { // Ditambahkan jika params ada tapi slug tidak, untuk menghentikan loading
       setLoading(false)
-      setError('Slug berita tidak ditemukan.')
+      setError('Slug berita tidak ditemukan di URL.')
     }
-  }, [params]) // Diubah menjadi [params] agar lebih aman
+  }, [params])
 
+  // ... sisa kode Anda (formatDate, return, dll) tidak berubah dan sudah benar ...
   const formatDate = (dateString) => {
     if (!dateString) return '';
     return new Date(dateString).toLocaleDateString('id-ID', {
@@ -119,7 +126,7 @@ export default function NewsDetailPageClient({ params }) {
           <Card className="rounded-2xl shadow-lg bg-white">
             <CardContent className="p-8">
               <div className="mb-8">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{news?.title}</h1>
+                <h1 className="text-3xl md-text-4xl font-bold text-gray-900 mb-4">{news?.title}</h1>
                 <div className="flex items-center text-gray-800 mb-6">
                   <Calendar size={16} className="mr-2" />
                   {formatDate(news?.createdAt)}
