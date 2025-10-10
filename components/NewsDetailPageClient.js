@@ -9,37 +9,39 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Calendar, ArrowLeft } from 'lucide-react'
 
-// Nama fungsi diubah agar sesuai nama file
 export default function NewsDetailPageClient({ params }) {
-  // Baris "const params = useParams()" sudah dihapus
   const [news, setNews] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  // --- PERBAIKAN DI BAGIAN INI ---
   useEffect(() => {
-    // Pengecekan 'fetchNews' tetap sama
+    // Fungsi fetchNews sekarang ada di dalam useEffect
+    const fetchNews = async () => {
+      try {
+        const response = await fetch(`/api/news/${params.slug}`)
+        const data = await response.json()
+        
+        if (data.success) {
+          setNews(data.data)
+        } else {
+          setError('Berita tidak ditemukan')
+        }
+      } catch (error) {
+        console.error('Error fetching news:', error)
+        setError('Terjadi kesalahan saat memuat berita')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    // Pengecekan dan pemanggilan tetap sama
     if (params.slug) {
       fetchNews()
     }
-  }, [params.slug])
+  }, [params.slug]) // Dependency array sudah benar
 
-  const fetchNews = async () => {
-    try {
-      const response = await fetch(`/api/news/${params.slug}`)
-      const data = await response.json()
-      
-      if (data.success) {
-        setNews(data.data)
-      } else {
-        setError('Berita tidak ditemukan')
-      }
-    } catch (error) {
-      console.error('Error fetching news:', error)
-      setError('Terjadi kesalahan saat memuat berita')
-    } finally {
-      setLoading(false)
-    }
-  }
+  // --- BATAS AKHIR PERBAIKAN ---
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('id-ID', {
@@ -108,7 +110,6 @@ export default function NewsDetailPageClient({ params }) {
       <div className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
           
-          {/* Back Button */}
           <div className="mb-6">
             <Button asChild variant="outline">
               <Link href="/berita">
@@ -118,11 +119,9 @@ export default function NewsDetailPageClient({ params }) {
             </Button>
           </div>
 
-          {/* Article Content */}
           <Card className="rounded-2xl shadow-lg bg-white">
             <CardContent className="p-8">
               
-              {/* Title and Meta */}
               <div className="mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{news?.title}</h1>
                 <div className="flex items-center text-gray-800 mb-6">
@@ -131,7 +130,6 @@ export default function NewsDetailPageClient({ params }) {
                 </div>
               </div>
 
-              {/* Cover Image */}
               {news?.coverImage && (
                 <div className="relative h-64 md:h-96 mb-8 rounded-lg overflow-hidden">
                   <Image
@@ -143,7 +141,6 @@ export default function NewsDetailPageClient({ params }) {
                 </div>
               )}
 
-              {/* Content */}
               <div className="text-gray-900 leading-relaxed whitespace-pre-wrap text-lg">
                 {news?.content}
               </div>
@@ -151,7 +148,6 @@ export default function NewsDetailPageClient({ params }) {
             </CardContent>
           </Card>
 
-          {/* Related News or Back to News */}
           <div className="mt-8 text-center">
             <Button asChild>
               <Link href="/berita">Lihat Berita Lainnya</Link>
