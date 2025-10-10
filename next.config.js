@@ -1,12 +1,14 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
   images: {
     unoptimized: true,
   },
-  experimental: {
-    // Remove if not using Server Components
-    serverComponentsExternalPackages: ['mongodb'],
-  },
+  
+  // INI BAGIAN YANG DIPERBAIKI
+  serverExternalPackages: ['mongodb'],
+
+  // Bagian di bawah ini tidak diubah dan tetap sama
   webpack(config, { dev }) {
     if (dev) {
       // Reduce CPU/memory from file watching
